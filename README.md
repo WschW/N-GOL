@@ -3,7 +3,7 @@
 ## N-Dimensional generalization of Conway's Game of Life
 
 ## Progress:
-The Model can be found in ArrayFunctions.jl file is complete
+The Model that can be found in ArrayFunctions.jl file is complete
 
 ## TODO:
 1.) Make a UI to display to allow for the display and manipulation of the simulation outside of the REPL
