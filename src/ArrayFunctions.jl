@@ -29,19 +29,17 @@ end
 """
 finds the sum of the cells within the recatangular radius for each item in the array
 Input:
-    outputElType: the element type of the output
     edgeMode: a function that indexes the array
-    array: the input array, the elements must have '+' and 'i' operators
-            and be compatible with outputElType
+    array: the input array
     radius: the radius of an n-cube in which to sum
 Output: the sum of the cells within an n-cube of the radius for each
         item in the array, is of type SharedArray{outputElType}
 """
-@generated function neighborCount(outputElType,edgeMode, array::AbstractArray{T,N}, radius) where {T,N}
+@generated function neighborCount(edgeMode, array::AbstractArray{T,N}, radius) where {T,N}
     quote
-        output = SharedArray{outputElType}(size(array))
+        output = similar(array)
         for (index,value) in enumerate(IndexCartesian(),array)
-            count::outputElType = 0
+            count = zero(T)
             @nloops $N ii ii->(-radius:radius) begin
                 count += edgeMode(array, index.I .+ @ntuple $N ii)
             end
@@ -64,7 +62,7 @@ Output:
     an array that is the next generation
 """
 function nextGeneration(edgeMode,inputArray,radius,GenerationRule)
-    neighbors = neighborCount(widen(eltype(inputArray)),edgeMode,inputArray,radius)
+    neighbors = neighborCount(edgeMode,inputArray,radius)
     GenerationRule(neighbors,inputArray)
 end
 
