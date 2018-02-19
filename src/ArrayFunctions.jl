@@ -83,4 +83,4 @@ function GolGenerationRule(neighbors,inputArray)
     output
 end
 
-print(:loaded_2dGUI) #useful while working TODO:delele this stub
+print(:loaded_2dG) #useful while working TODO:delele this stub
