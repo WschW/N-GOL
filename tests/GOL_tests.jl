@@ -1,7 +1,6 @@
 module Test
 
 include("../src/ArrayFunctions.jl")
-using GOL
 #ONE DIMENSIONAL TESTS
 
 
@@ -96,15 +95,32 @@ end
 #THREE DIMENSIONAL TESTS
 
 function three_D_oveflow_wrapped()
-    #TODO:
+    A = zeros(Int,(4,4,4))
+    B = zeros(Int,(4,4,4))
+    quad = [0 0 0 0; 0 1 1 0; 0 1 1 0; 0 0 0 0]
+    A[:,:,1] = [0 0 0 0; 0 0 1 0; 0 1 1 0; 0 0 0 0]
+    B[:,:,1] = quad
+    B[:,:,2] = quad
+    B[:,:,4] = quad
+    if(B != GOL.nextGeneration(GOL.shiftRotArr,A,1,GOL.GolGenerationRule))
+        throw("three_D_oveflow_wrapped not passed")
+    end
 end
 
 function three_D_oveflow_zeroed()
-    #TODO:
+    A = zeros(Int,(4,4,4))
+    B = zeros(Int,(4,4,4))
+    quad = [0 0 0 0; 0 1 1 0; 0 1 1 0; 0 0 0 0]
+    A[:,:,1] = [0 0 0 0; 0 0 1 0; 0 1 1 0; 0 0 0 0]
+    B[:,:,1] = quad
+    B[:,:,2] = quad
+    if(B != GOL.nextGeneration(GOL.shiftZeroArr,A,1,GOL.GolGenerationRule))
+        throw("three_D_oveflow_wrapped not passed")
+    end
 end
 
 function runtests()
-    tests = [two_D_oveflow_zeroed,two_D_oveflow_wrapped,one_D_oveflow_zeroed,one_D_oveflow_wrapped]
+    tests = [two_D_oveflow_zeroed,two_D_oveflow_wrapped,one_D_oveflow_zeroed,one_D_oveflow_wrapped,three_D_oveflow_wrapped,three_D_oveflow_zeroed]
     count = 0
     foreach((x) -> begin
                         try
