@@ -2,6 +2,7 @@
  © Warren Schweigert 2017
  Array functions for n-dimensional game of life.
 =#
+module GOL
 using Base.Cartesian
 
 export shiftRotArr, shiftZeroArr, neighborCount, nextGeneration, GolGenerationRule
@@ -81,4 +82,4 @@ function GolGenerationRule(neighbors,inputArray)
     output
 end
 
-print(:loaded_2dG) #useful while working TODO:delele this stub
+end
